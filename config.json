@@ -23,24 +23,24 @@
   },
   "model_evaluation": {
     "use_test_set": true,
-    "final_model_save_path": "/content/drive/MyDrive/20240414/final_model.pth"
+    "final_model_save_path": "your_path_to_pth_file_goes_here"
   },
   "dataset_path": {
-	  "path": "/content/drive/MyDrive/ad_creatives_detection"
+	  "path": "your_path_to_image_dataset_goes_here"
   },  
   "tensorboard_logging": {
-    "log_dir": "/content/drive/MyDrive/20240414"
+    "log_dir": "your_path_to_tensorboard_dir_goes_here"
   },
   "directory_to_save_models": {
-	 "model_path" : "/content/drive/MyDrive/20240414"
+	 "model_path" : "your_path_to_save_the_models_goes_here"
   },
   "tensorboard_event_file": {
-	 "event_file_path" : "/content/drive/MyDrive/20240414/events.out.tfevents.1713104950.03316912c47b.283.0"
+	 "event_file_path" : "your_path_to_tensorboard_file_goes_here"
   },
   "best_model_path": {
-	 "path" : "/content/drive/MyDrive/20240414/best_model_fold_1.pth"
+	 "path" : "your_path_to_best_model_pth_file_goes_here"
   },
   "model_predictions":{
-	  "image_path" : "/content/drive/MyDrive/ad_creatives_evaluation_45280.jpg"
+	  "image_path" : "your_path_to_image_evaluation_goes_here"
   }
 }
