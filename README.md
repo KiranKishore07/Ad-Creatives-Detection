@@ -24,7 +24,8 @@ This project implements image classification using the Data-efficient image Tran
 - tensorboard
 
 ### File Structure:
-- `main.py`: Main script for training and evaluation.
+- `main.py`: Main script for model evaluation.
+-  `model_train.py`: Main script for training.
 - `config.json`: Configuration file for specifying parameters.
 - `README.md`: Overview of the project and instructions.
 
