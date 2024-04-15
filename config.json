@@ -1,0 +1,46 @@
+{
+  "data_preprocessing": {
+    "resize_dimensions": [224, 224],
+    "random_resized_crop": {
+      "scale": [0.08, 1.0],
+      "ratio": [0.75, 1.3333333333333333]
+    },
+    "random_horizontal_flip": true,
+    "normalize_mean": [0.485, 0.456, 0.406],
+    "normalize_std": [0.229, 0.224, 0.225]
+  },
+  "model_training": {
+    "num_epochs": 15,
+    "batch_size": 32,
+    "learning_rate": 0.0001,
+    "num_folds": 5,
+    "early_stopping_patience": 3
+  },
+  "model_architecture": {
+    "name": "DeiT",
+    "pretrained": true,
+    "base_model": "deit_base_patch16_224"
+  },
+  "model_evaluation": {
+    "use_test_set": true,
+    "final_model_save_path": "/content/drive/MyDrive/20240414/final_model.pth"
+  },
+  "dataset_path": {
+	  "path": "/content/drive/MyDrive/ad_creatives_detection"
+  },  
+  "tensorboard_logging": {
+    "log_dir": "/content/drive/MyDrive/20240414"
+  },
+  "directory_to_save_models": {
+	 "model_path" : "/content/drive/MyDrive/20240414"
+  },
+  "tensorboard_event_file": {
+	 "event_file_path" : "/content/drive/MyDrive/20240414/events.out.tfevents.1713104950.03316912c47b.283.0"
+  },
+  "best_model_path": {
+	 "path" : "/content/drive/MyDrive/20240414/best_model_fold_1.pth"
+  },
+  "model_predictions":{
+	  "image_path" : "/content/drive/MyDrive/ad_creatives_evaluation_45280.jpg"
+  }
+}
