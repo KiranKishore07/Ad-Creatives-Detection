@@ -100,10 +100,9 @@ def main():
                              std=config['data_preprocessing']['normalize_std'])
     ])
 
-    train_dataset = ImageFolder(root=config['dataset_path']['path'],
+    dataset = ImageFolder(root=config['dataset_path']['path'],
                                 transform=transform)
-    test_dataset = ImageFolder(root=config['dataset_path']['path'],
-                               transform=transforms.ToTensor()) if config['model_evaluation']['use_test_set'] else None
+
 
     # Define K-fold cross-validation
     kfold = KFold(n_splits=config['model_training']['num_folds'], shuffle=True)
@@ -112,7 +111,7 @@ def main():
     num_epochs = config['model_training']['num_epochs']
     batch_size = config['model_training']['batch_size']
     learning_rate = config['model_training']['learning_rate']
-    num_classes = len(train_dataset.classes)
+    num_classes = len(dataset.classes)
 
     conf_matrices = []
     writer = SummaryWriter(log_dir=config['tensorboard_logging']['log_dir'])
@@ -121,9 +120,9 @@ def main():
     save_dir = config['directory_to_save_models']['model_path']
     os.makedirs(save_dir, exist_ok=True)
 
-    for fold, (train_indices, test_indices) in enumerate(kfold.split(train_dataset)):
-        train_data = torch.utils.data.Subset(train_dataset, train_indices)
-        test_data = torch.utils.data.Subset(train_dataset, test_indices)
+    for fold, (train_indices, test_indices) in enumerate(kfold.split(dataset)):
+        train_data = torch.utils.data.Subset(dataset, train_indices)
+        test_data = torch.utils.data.Subset(dataset, test_indices)
 
         train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
         test_loader = DataLoader(test_data, batch_size=batch_size)
