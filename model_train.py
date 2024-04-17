@@ -133,10 +133,20 @@ def main():
         # Define loss function and optimizer
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-
-        prev_best_model_path = os.path.join(save_dir, f'best_model_fold{fold}.pth')
-        if os.path.exists(prev_best_model_path):
-            model.load_state_dict(torch.load(prev_best_model_path))
+        
+        # Load the previously saved model with checkpoints
+        checkpoint_path = f'{save_dir}/model_with_checkpoints}.pth'
+        if os.path.exists(checkpoint_path):
+            checkpoint = torch.load(checkpoint_path)
+            model.load_state_dict(checkpoint['model_state_dict'])
+            optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            epoch = checkpoint['epoch']
+            train_loss = checkpoint['train_loss']
+            val_loss = checkpoint['val_loss']
+            val_accuracy = checkpoint['val_accuracy']
+            print("Model found with previously saved checkpoints and the training resumes")
+        else:
+            print("Checkpoint not found. Starting from scratch.")
 
         # Initialize variables for early stopping
         best_val_loss = float('inf')
@@ -200,12 +210,25 @@ def main():
                 conf_matrix = confusion_matrix(ground_truths, predictions)
                 conf_matrices.append(conf_matrix)
 
-            # Save the model after each epoch
+            # Save the model temporarily after each epoch
             try:
                 torch.save(model.state_dict(), f'{save_dir}/model_fold{fold + 1}_epoch{epoch + 1}.pth')
             except Exception as e:
                 print(f"Error occurred while saving model: {e}")
+            # Saving the model with Checkpoints.
+            try:
+                torch.save({
+                    'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                    'train_loss': train_loss,
+                    'val_loss': val_loss,
+                    'val_accuracy': val_accuracy,
+                }, f'{save_dir}/model_with_checkpoints.pth', overwrite=True)
+            except Exception as e:
+                print(f"Error occurred while saving checkpoint: {e}")
 
+        # Retain the best epoch file and remove the rest for the fold
         all_model_files = [os.path.join(save_dir, f'model_fold{fold + 1}_epoch{i + 1}.pth') for i in range(num_epochs)]
         best_model_file = os.path.join(save_dir, f'model_fold{fold + 1}_epoch{best_epoch + 1}.pth')
         for model_file in all_model_files:
