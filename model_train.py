@@ -224,7 +224,7 @@ def main():
                     'train_loss': train_loss,
                     'val_loss': val_loss,
                     'val_accuracy': val_accuracy,
-                }, f'{save_dir}/model_with_checkpoints.pth', overwrite=True)
+                }, f'{save_dir}/model_with_checkpoints.pth')
             except Exception as e:
                 print(f"Error occurred while saving checkpoint: {e}")
 
